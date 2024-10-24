@@ -4,13 +4,23 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "dlu_voice_transcriber"
-version = "0.2.1"  # Version bump für den Bugfix
+version = "0.2.2"  # Version bump für den Import-Fix
 authors = [
     { name="Dirk Ulbricht", email="dirk.ulbricht@gmail.com" },
 ]
 description = "A multilingual voice recording and transcription tool with German and English support"
 readme = "README.md"
-requires-python = ">=3.8"
+requires-python = ">=3.8, <3.12"  # Obergrenze hinzugefügt wegen aifc-Modul
+license = "MIT"  # Lizenz explizit angeben
+keywords = [  # Keywords für bessere Auffindbarkeit
+    "audio recording",
+    "speech recognition",
+    "transcription",
+    "german transcription",
+    "voice to text",
+    "multilingual",
+    "audio processing"
+]
 classifiers = [
     "Development Status :: 4 - Beta",
     "Programming Language :: Python :: 3",
@@ -37,6 +47,8 @@ dependencies = [
 "Homepage" = "https://github.com/dullibri/dlu_voice_transcriber"
 "Bug Tracker" = "https://github.com/dullibri/dlu_voice_transcriber/issues"
 "Documentation" = "https://github.com/dullibri/dlu_voice_transcriber#readme"
+"Source Code" = "https://github.com/dullibri/dlu_voice_transcriber"
+"Changelog" = "https://github.com/dullibri/dlu_voice_transcriber/blob/main/CHANGELOG.md"
 
 [project.scripts]
 dlu_transcribe = "dlu_voice_transcriber.__main__:main"
