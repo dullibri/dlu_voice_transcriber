@@ -1,3 +1,21 @@
 # Audio to Text
 
 A Python tool for recording audio and transcribing it to text in multiple languages.
+
+## Installation
+
+```bash
+pip install audio-to-text
+```
+
+## Usage
+
+List available audio devices:
+```bash
+audio-to-text --list-devices
+```
+
+Record and transcribe:
+```bash
+audio-to-text --device 2 --duration 5 --output my_recording
+```
