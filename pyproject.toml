@@ -1,0 +1,29 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "audio_to_text"
+version = "0.1.0"
+authors = [
+    { name="Dirk Ulbricht", email="your.email@example.com" },
+]
+description = "A tool for recording audio and transcribing it to text in multiple languages"
+readme = "README.md"
+requires-python = ">=3.8"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+dependencies = [
+    "pyaudio>=0.2.14",
+    "SpeechRecognition>=3.11.0",
+]
+
+[project.urls]
+"Homepage" = "https://github.com/yourusername/audio_to_text"
+"Bug Tracker" = "https://github.com/yourusername/audio_to_text/issues"
+
+[project.scripts]
+audio-to-text = "audio_to_text.__main__:main"
