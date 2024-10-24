@@ -3,18 +3,30 @@ requires = ["setuptools>=61.0"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "audio_to_text"
-version = "0.1.0"
+name = "dlu_voice_transcriber"
+version = "0.2.0"  # Version erhöht von 0.1.0 auf 0.2.0
 authors = [
-    { name="Dirk Ulbricht", email="your.email@example.com" },
+    { name="Dirk Ulbricht", email="dirk.ulbricht@gmail.com" },
 ]
-description = "A tool for recording audio and transcribing it to text in multiple languages"
+description = "A multilingual voice recording and transcription tool with German and English support"
 readme = "README.md"
 requires-python = ">=3.8"
 classifiers = [
+    "Development Status :: 4 - Beta",
     "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
     "License :: OSI Approved :: MIT License",
     "Operating System :: OS Independent",
+    "Topic :: Multimedia :: Sound/Audio :: Speech",
+    "Topic :: Multimedia :: Sound/Audio :: Capture/Recording",
+    "Natural Language :: English",
+    "Natural Language :: German",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Education",
+    "Intended Audience :: End Users/Desktop",
 ]
 dependencies = [
     "pyaudio>=0.2.14",
@@ -22,8 +34,14 @@ dependencies = [
 ]
 
 [project.urls]
-"Homepage" = "https://github.com/yourusername/audio_to_text"
-"Bug Tracker" = "https://github.com/yourusername/audio_to_text/issues"
+"Homepage" = "https://github.com/dullibri/dlu_voice_transcriber"
+"Bug Tracker" = "https://github.com/dullibri/dlu_voice_transcriber/issues"
+"Documentation" = "https://github.com/dullibri/dlu_voice_transcriber#readme"
 
 [project.scripts]
-audio-to-text = "audio_to_text.__main__:main"
+dlu_transcribe = "dlu_voice_transcriber.__main__:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["dlu_voice_transcriber*"]
+namespaces = false

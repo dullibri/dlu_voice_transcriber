@@ -1,24 +1,32 @@
-# Audio to Text
+# DLU Voice Transcriber
 
-A Python tool for recording audio and transcribing it to text in multiple languages.
+A Python tool for recording audio and transcribing it to text in multiple languages (English and German).
 
 ## Installation
 
 ```bash
-pip install audio-to-text
+pip install dlu_voice_transcriber
 ```
 
 ## Usage
 
 List available audio devices:
 ```bash
-audio-to-text --list-devices
+dlu_transcribe --list-devices
 ```
 
-Record and transcribe:
+Record and transcribe (replace X with your device number):
+```bash
+dlu_transcribe --device X --duration 5 --output my_recording
 ```
-bash
-audio-to-text --device 2 --duration 5 --output my_recording
+
+Example:
+```bash
+# List available devices
+dlu_transcribe --list-devices
+
+# Record for 10 seconds using device 2
+dlu_transcribe --device 2 --duration 10 --output test_recording
 ```
 
 ## Features
@@ -32,8 +40,9 @@ audio-to-text --device 2 --duration 5 --output my_recording
 ## Requirements
 
 - Python 3.8 or higher
-- PyAudio
-- SpeechRecognition
+- Working microphone
+- For Linux users: `sudo apt-get install python3-pyaudio`
+- For macOS users: `brew install portaudio`
 
 ## License
 
