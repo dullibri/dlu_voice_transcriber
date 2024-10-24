@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "dlu_voice_transcriber"
-version = "0.2.0"  # Version erhöht von 0.1.0 auf 0.2.0
+version = "0.2.1"  # Version bump für den Bugfix
 authors = [
     { name="Dirk Ulbricht", email="dirk.ulbricht@gmail.com" },
 ]

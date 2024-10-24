@@ -1,25 +1,9 @@
-"""Main entry point for the audio_to_text application."""
+"""Main entry point for the dlu_voice_transcriber application."""
 
 import argparse
 from pathlib import Path
-import pyaudio
-from audio_to_text.core.recorder import AudioRecorder
-from audio_to_text.core.transcriber import Transcriber
-
-def list_audio_devices():
-    """List all available audio input devices."""
-    p = pyaudio.PyAudio()
-    print("\nAvailable input devices:")
-    for i in range(p.get_device_count()):
-        try:
-            device_info = p.get_device_info_by_index(i)
-            if device_info['maxInputChannels'] > 0:  # if it's an input device
-                print(f"[{i}] {device_info['name']}")
-                print(f"    Max input channels: {device_info['maxInputChannels']}")
-                print(f"    Default sample rate: {device_info['defaultSampleRate']}")
-        except Exception as e:
-            print(f"Could not get info for device {i}: {e}")
-    p.terminate()
+from dlu_voice_transcriber.core.recorder import AudioRecorder
+from dlu_voice_transcriber.core.transcriber import Transcriber
 
 def main():
     parser = argparse.ArgumentParser(description='Record audio and transcribe to text.')
