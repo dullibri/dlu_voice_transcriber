@@ -13,8 +13,8 @@ __all__ = ['AudioRecorder', 'Transcriber']
 
 import argparse
 from pathlib import Path
-from audio_to_text.core.recorder import AudioRecorder
-from audio_to_text.core.transcriber import Transcriber
+from dlu_voice_transcriber.core.recorder import AudioRecorder
+from dlu_voice_transcriber.core.transcriber import Transcriber
 
 def main():
     parser = argparse.ArgumentParser(description='Record audio and transcribe to text.')
