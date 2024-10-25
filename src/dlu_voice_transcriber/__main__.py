@@ -4,6 +4,27 @@ import argparse
 from pathlib import Path
 from dlu_voice_transcriber.core.recorder import AudioRecorder
 from dlu_voice_transcriber.core.transcriber import Transcriber
+import pyaudio
+
+def list_audio_devices():
+    """List all available audio input devices."""
+    p = pyaudio.PyAudio()
+    info = p.get_host_api_info_by_index(0)
+    num_devices = info.get('deviceCount')
+    
+    print("\nAvailable audio input devices:")
+    print("-" * 50)
+    
+    for i in range(num_devices):
+        device_info = p.get_device_info_by_index(i)
+        if device_info.get('maxInputChannels') > 0:  # Only show input devices
+            print(f"Device ID {i}: {device_info.get('name')}")
+            print(f"    Input channels: {device_info.get('maxInputChannels')}")
+            print(f"    Sample rate: {int(device_info.get('defaultSampleRate'))}Hz")
+            print(f"    Default: {'Yes' if i == p.get_default_input_device_info()['index'] else 'No'}")
+            print("-" * 50)
+    
+    p.terminate()
 
 def main():
     parser = argparse.ArgumentParser(description='Record audio and transcribe to text.')
@@ -11,6 +32,8 @@ def main():
                        help='Recording duration in seconds')
     parser.add_argument('--output', type=str, default='recording',
                        help='Output filename (without extension)')
+    parser.add_argument('--language', type=str, default='de',
+                       help='Language for transcription. Defaults to "de" for German. Set "en" for english')
     parser.add_argument('--list-devices', action='store_true',
                        help='List available audio input devices and exit')
     parser.add_argument('--device', type=int,
