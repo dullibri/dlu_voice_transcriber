@@ -2,6 +2,7 @@
 import wave
 import pyaudio
 from pathlib import Path
+from pydub import AudioSegment
 
 class AudioRecorder:
     """Handles audio recording from microphone."""
@@ -112,3 +113,23 @@ class AudioRecorder:
             print(f"\nError saving WAV file: {e}")
             raise
 
+    def save_mp3(self, filename: str, quality=320) -> Path:
+        """Save recording directly as MP3 file with specified quality (kbps)."""
+        # First save as temporary WAV
+        temp_wav = Path(str(filename).replace('.mp3', '_temp.wav'))
+        self.save_wav(temp_wav)
+        
+        # Convert to MP3
+        try:
+            filepath = Path(filename)
+            audio = AudioSegment.from_wav(str(temp_wav))
+            audio.export(str(filepath), format="mp3", bitrate=f"{quality}k")
+            print(f"\nSaved MP3 recording to: {filepath}")
+            
+            # Clean up temporary WAV file
+            temp_wav.unlink()
+            
+            return filepath
+        except Exception as e:
+            print(f"\nError saving MP3 file: {e}")
+            raise
