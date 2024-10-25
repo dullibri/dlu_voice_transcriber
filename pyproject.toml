@@ -4,14 +4,14 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "dlu_voice_transcriber"
-version = "0.2.2"
+version = "0.2.3"
 authors = [
     { name="Dirk Ulbricht", email="dirk.ulbricht@gmail.com" },
 ]
 description = "A multilingual voice recording and transcription tool with German and English support"
 readme = "README.md"
 requires-python = ">=3.8, <3.12"
-license = {text = "MIT"}  # Korrigiertes License-Format
+license = {text = "MIT"}
 keywords = [
     "audio recording",
     "speech recognition",
@@ -41,6 +41,8 @@ classifiers = [
 dependencies = [
     "pyaudio>=0.2.14",
     "SpeechRecognition>=3.11.0",
+    "pydub>=0.25.1",
+    "wave>=0.0.2"
 ]
 
 [project.urls]
