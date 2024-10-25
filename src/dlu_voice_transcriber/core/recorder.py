@@ -3,6 +3,10 @@ import wave
 import pyaudio
 from pathlib import Path
 from pydub import AudioSegment
+import threading
+import sys
+from queue import Queue
+import time
 
 class AudioRecorder:
     """Handles audio recording from microphone."""
@@ -15,6 +19,9 @@ class AudioRecorder:
         self.RATE = 48000
         self.p = pyaudio.PyAudio()
         self.frames = []
+        self.stop_recording = False
+        self.recording_finished = threading.Event()
+        self.keypress_queue = Queue()
         
         # Use specified device or find default
         self.device_index = device_index if device_index is not None else self._find_best_input_device()
@@ -42,7 +49,15 @@ class AudioRecorder:
                 continue
         
         raise Exception("No working input device found!")
-        
+    
+    def _wait_for_keypress(self):
+        """Wait for Enter key press."""
+        try:
+            input()  # Wait for Enter key
+            self.keypress_queue.put(True)
+        except (KeyboardInterrupt, EOFError):
+            self.keypress_queue.put(True)
+            
     def __enter__(self):
         return self
         
@@ -50,7 +65,7 @@ class AudioRecorder:
         self.p.terminate()
         
     def start_recording(self, duration: int) -> None:
-        """Record audio for specified duration in seconds."""
+        """Record audio for specified duration in seconds or until Enter is pressed."""
         try:
             # Get device info for selected device
             device_info = self.p.get_device_info_by_index(self.device_index)
@@ -75,21 +90,37 @@ class AudioRecorder:
             )
             
             print("\nRecording started...")
-            print("Please speak into the microphone...")
+            print("Press Enter to stop recording early, or wait for the duration to complete...")
+            
+            # Start keypress listener thread
+            keypress_thread = threading.Thread(target=self._wait_for_keypress)
+            keypress_thread.daemon = True
+            keypress_thread.start()
             
             # Calculate total chunks needed
             total_chunks = int(self.RATE / self.CHUNK * duration)
+            start_time = time.time()
             
             # Record with progress indicator
             self.frames = []
             for i in range(total_chunks):
+                if not self.keypress_queue.empty():
+                    print("\nRecording stopped by user")
+                    break
+                    
                 data = stream.read(self.CHUNK, exception_on_overflow=False)
                 self.frames.append(data)
-                if i % 10 == 0:  # Update progress every 10 chunks
-                    progress = (i / total_chunks) * 100
-                    print(f"Recording progress: {progress:.1f}%", end='\r')
-                    
+                
+                # Calculate elapsed time and progress
+                elapsed_time = time.time() - start_time
+                progress = (elapsed_time / duration) * 100
+                print(f"Recording progress: {progress:.1f}% ({elapsed_time:.1f}s / {duration}s)", end='\r')
+                
+                if elapsed_time >= duration:
+                    break
+            
             print("\nRecording finished!")
+            self.recording_finished.set()
             
             stream.stop_stream()
             stream.close()
