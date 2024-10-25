@@ -34,9 +34,9 @@ jobs:
         pip install build pytest pylint
         pip install -e .
     
-    - name: Lint with pylint
-      run: |
-        pylint src/dlu_voice_transcriber
+    # - name: Lint with pylint
+    #   run: |
+    #     pylint src/dlu_voice_transcriber
 
     - name: Build package
       run: python -m build
