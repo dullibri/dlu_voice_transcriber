@@ -40,3 +40,4 @@ recordings/
 # OS specific
 .DS_Store
 Thumbs.db
+audio_to_text.code-workspace
